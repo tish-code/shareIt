@@ -5,7 +5,6 @@ interface IProps {
 }
 export function Layout(props: IProps) {
   const { children } = props;
-  console.log("sharley");
   return (
     <>
       <Head>

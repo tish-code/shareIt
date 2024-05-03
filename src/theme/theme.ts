@@ -2,8 +2,8 @@ import { alpha, createTheme } from "@mui/material";
 import { createComponents } from "./components";
 
 const primary = {
-  main: "#000",
-  green: "#048691",
+  main: "#048691",
+  dark: "#000",
 };
 const neutral = {
   "200": "f2f4f7",

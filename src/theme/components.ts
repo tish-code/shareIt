@@ -17,7 +17,7 @@ export const createComponents = ({ palette }: any) => {
         input: {
           fontSize: 14,
           fontWeight: 500,
-          lineHeight: "24px",
+          lineHeight: "24 px",
         },
       },
     },
