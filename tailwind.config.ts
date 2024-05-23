@@ -12,6 +12,9 @@ const config: Config = {
       backgroundColor: {
         primary: "#048691",
       },
+      colors: {
+        primary: "#048691",
+      },
     },
   },
   plugins: [],

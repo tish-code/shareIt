@@ -1,21 +1,20 @@
 import { Layout as AdminLayout } from "@/layout/layout";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Typography, TextField, Button, SvgIcon } from "@mui/material";
+import { TextField, SvgIcon, FilledInput, InputAdornment } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 function AdminRoot() {
   const [open, setOpen] = useState(false);
-  const [files, setFiles] = useState<any>([]);
-  console.log(files);
+  const [file, setFile] = useState<any>("");
   return (
-    <div className="flex">
-      <div className="flex flex-1 justify-center px-[2em] py-[1em]">
-        <div className="w-full flex flex-col gap-4">
+    <div className="flex h-screen w-full justify-center">
+      <div className="flex flex-1 justify-center px-[2em] py-[1em] max-w-[800px]">
+        <div className="relative w-full flex flex-col gap-4">
           <button
             onClick={() => setOpen(true)}
             disabled={open}
             className={`${
-              open ? "bg-opacity-70" : "bg-opacity-80 hover:bg-opacity-100"
+              open ? " bg-opacity-70" : "bg-opacity-90 hover:bg-opacity-100"
             } bg-primary w-full text-white py-3 rounded-3xl transition duration-300 flex justify-center gap-1`}
           >
             <SvgIcon>
@@ -23,13 +22,14 @@ function AdminRoot() {
             </SvgIcon>
             Add Product
           </button>
+
           <AnimatePresence>
             {open && (
               <motion.div
-                className="w-full flex flex-col bg-white px-2 rounded-3xl overflow-hidden"
+                className="absolute w-full flex flex-col bg-white px-2 rounded-[1.4rem] overflow-hidden"
                 initial={{ height: 0, paddingTop: 0 }}
                 animate={{ height: "100%", paddingTop: "0.5rem" }}
-                transition={{ duration: 0.1 }}
+                transition={{ duration: 0.3 }}
                 exit={{ height: 0, paddingTop: 0 }}
               >
                 <button
@@ -41,48 +41,58 @@ function AdminRoot() {
                   </svg>
                 </button>
                 <div className="px-4 mb-4 w-full flex flex-col gap-4">
-                  <Typography
-                    variant="h1"
-                    sx={{
-                      fontSize: "20px",
-                    }}
-                  >
+                  <h1 className="text-gray-600 font-medium text-[1.2rem]">
                     Enter Product Information
-                  </Typography>
-                  <div className="flex flex-col gap-2">
+                  </h1>
+                  <div className="flex flex-col gap-4">
                     <TextField
                       variant="filled"
                       label="Product Title"
                       sx={{ outline: "none" }}
                     />
-                    <input
-                      type="file"
-                      id="file"
-                      className="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute z-[-1]"
-                      onChange={(e) => {
-                        const vary = e.target.value.split(`fakepath`).pop();
-                        setFiles([...files, vary]);
-                        // console.log()
-                      }}
-                    />
-                    <label
-                      htmlFor="file"
-                      className="text-[1.25rem] font-semibold text-white bg-black inline-block hover:bg-red-700 focus:bg-red-700 cursor-pointer"
-                    >
-                      Add Product
-                    </label>
-                    {files.map((item: any, index: any) => {
-                      return <p key={index}>{item}</p>;
-                    })}
+
+                    <div className="flex gap-4 items-center">
+                      <input
+                        type="file"
+                        id="file"
+                        className="w-[0.1px] h-[0.1px] opacity-0 overflow-hidden absolute z-[-1]"
+                        onChange={(e) => {
+                          console.log(e.target.value);
+                          const vary = e.target.value.split("fakepath\\").pop();
+                          setFile(vary);
+                        }}
+                      />
+                      <label
+                        htmlFor="file"
+                        className=" font-semibold text-primary cursor-pointer"
+                      >
+                        Add Product
+                      </label>
+                      {file && (
+                        <div className="flex gap-2 text-gray-600 font-semibold rounded-2xl items-center ">
+                          <p className="text-[0.9em]">
+                            {file.slice(0, 25) + "..."}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
+                  <button
+                    onClick={() => {
+                      console.log("submitted");
+                      setOpen(false);
+                    }}
+                    className={`
+                      bg-opacity-95 hover:bg-opacity-100 bg-primary w-full text-white py-3 rounded-3xl transition duration-300 flex justify-center gap-1`}
+                  >
+                    Submit
+                  </button>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </div>
-      <div id="divider" className="border border-[#d9dbda]"></div>
-      <div className="flex-1"></div>
     </div>
   );
 }
